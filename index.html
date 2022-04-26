@@ -7,7 +7,27 @@
     <title>Todos</title>
 </head>
 <body>
-    <button id="sendBtn">Send</button>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">Todos</a>
+        </div>
+    </header>
+    <main>
+        <section class="add-section">
+            <form class="add-todo-form" id="addForm">
+                <input type="text" name="title" placeholder="Add a todo title"
+                class="add-todo-input">
+                <button type="submit" class="add-todo-btn">Add</button>
+            </form>
+        </section>
+        <section class="todos" id="todoList">
+           <!-- <div class="todo">
+               <h2 class="todo-title"></h2>
+               <h3 class="todo-status"></h3>
+           </div>  -->
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./JS/app.js"></script>
 </body>
 </html>
