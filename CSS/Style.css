@@ -164,6 +164,45 @@
     text-decoration: none;
     color: inherit;
   }
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .section {
+    margin-top: 100px;
+  }
 /*====================COMMON END=======================*/
 
   /*====================HEADER START=======================*/
+  .header{
+    display: flex;
+    justify-content: center;
+    background-color: #000090;
+    padding: 5px 0;
+  }
+  .header-logo{
+    color: #ff0;
+  }
+  .add-todo-form{
+    display: flex;
+    justify-content: center;
+  }
+  .add-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 15px;
+  }
+  .todo-delete:hover{
+    background-color:red;
+    color:#fff;
+    border-radius: 2px;
+    border: 1px solid black;
+  }
+  .todos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

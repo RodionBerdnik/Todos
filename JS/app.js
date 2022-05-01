@@ -19,11 +19,12 @@ function updateTodos(id, todoData) {
   return api.patch("/todos/" + id, todoData);
 }
 function deleteTodo(id) {
-  return api.delete("/todos/", + id);
+  return api.delete("/todos/" + id);
 }
 
 const addForm = document.getElementById("addForm");
 const todoList = document.getElementById("todoList");
+
 let TODOS = [];
 start();
 
@@ -31,9 +32,9 @@ todoList.addEventListener('change', async (e) => {
     const todoElem = e.target.closest('.todo');
     const todoId = Number(todoElem.dataset.id);
     console.log(todoId, e.target.checked);
-    const [updatedTodoError, updatedTodo] = await updateTodos(todoId,{completed: e.target.updated});
+    const [updatedTodoError, updatedTodo] = await updateTodos(todoId,{completed: e.target.checked});
   
-    if (createdTodoError) {
+    if (updatedTodoError) {
       alert("Error updating todo");
       console.warn(updatedTodoError);
     } else {
@@ -58,11 +59,13 @@ todoList.addEventListener("click", async (e) => {
   }
 });
 
-addForm.addEventListener("submit", async (e) => {
+addForm.addEventListener("submit",  async (e) => {
   e.preventDefault();
+
   const newTodo = {
     title: e.target.title.value,
     completed: false,
+    createdAt:Date.now(),
   };
   const [createdTodoError, createdTodo] = await createTodo(newTodo);
 
@@ -78,29 +81,41 @@ addForm.addEventListener("submit", async (e) => {
 
 async function start() {
   const [todosError, todos] = await getTodos();
+
   if (todosError) {
     console.warn(todosError);
   } else {
     TODOS = todos;
     renderTodos(TODOS, todoList);
   }
+}
+
 
   function renderTodos(todos, todoListElem) {
     const todosHTML = todos
       .map((todo) => {
-        return `<div class="todo" data-id="${todo.id}>
+        return `<div class="todo" data-id="${todo.id}">
         <h2 class="todo-title">${todo.title}</h2>
-        <h3 class="todo-status"><input type="checkbox" ${todo.completed ? 'checked' : ''}>${todo.status ? "Competed" : "Uncompeted"}</h3>
+        <h3 class="todo-status"><input type="checkbox" ${todo.completed ? 'checked' : ''}>
+        ${todo.completed ? "Completed" : "Uncompleted"}</h3>
+        <time>${new Date(todo.createdAt).toLocaleString()}</time>
         <button class="todo-delete">Delete</button>
     </div>`;
       }).join('');
     render(todosHTML, todoListElem);
   }
 
+
+
   function render(html, element) {
     element.innerHTML = html;
   }
-}
+
+window.addEventListener('beforeunload', (e) =>{
+  e.preventDefault();
+  e.returnValue = '';
+});
+
 // sendBtn.addEventListener('click', async (e) => {
 //     const [userError]= await createUser({name:'Petro'})
 //     if (!userError){
