@@ -24,7 +24,7 @@ function deleteTodo(id) {
 
 const addForm = document.getElementById("addForm");
 const todoList = document.getElementById("todoList");
-
+const sortingSelect = document.getElementById("sortingSelect");
 let TODOS = [];
 start();
 
@@ -105,7 +105,15 @@ async function start() {
     render(todosHTML, todoListElem);
   }
 
-
+  sortingSelect.addEventListener('change', (e) => {
+    const value = e.target.value.split('/')
+    const [key, order] = value
+    console.log(value)
+    TODOS.sort((todoA,todoB) =>{
+      return String(todoA[key]).localeCompare(String(todoB[key]), undefined, {numeric: true}) * order;
+    })
+    renderTodos(TODOS, todoList);
+  })
 
   function render(html, element) {
     element.innerHTML = html;
